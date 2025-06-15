@@ -1,0 +1,23 @@
+root =
+    l 0 FILL : collect polka
+
+grid_size = 10
+half = grid_size / 2
+
+polka = 
+  for i in 0..grid_size
+    collect (polka_col i)
+
+polka_col i = 
+  for j in 0..grid_size
+    t (norm i) (norm j) (polka_style i j (polka_scale i j dot))
+
+norm n = (n - half) * 90
+
+polka_scale i j shape =
+  let size = if ((mod j 2) == 1) && ((mod i 2) == 1) -> 0.7 else -> 1
+      s (size) (size) shape
+
+polka_style i j shape = h (100 * abs ((i - half) * (j - half))) shape
+
+dot = l 0.75 (s 30 30 CIRCLE)
